@@ -1,12 +1,9 @@
 import pymongo
 from pymongo import TEXT
-from pprint import pprint
-import datetime
 import csv
 
 myclient = pymongo.MongoClient("mongodb://localhost:27017/") 
 # mongod --port 27017 --dbpath mongoDBlog &
-# mongo --port 27017
 
 # focusing on the search function
 # so not storing images but rather a db of attributes that may be relevant to search 
@@ -38,7 +35,8 @@ def load_searchdb():
 											 row[4].replace(",", " ")+' '+ # site_tags
 											 row[5].replace(",", " "), # seller_tags
 								header[6]: int(row[6]), # buyer_rating
-								header[7]: float(row[7]) # price
+								header[7]: float(row[7]), # price
+								header[8]: int(row[8]) # in_stock
 								}
 			searchdb.search_images.insert_one(search_document)
 
@@ -53,14 +51,15 @@ def search_by_image(img_id):
 	file_type = query['file_type'].split()
 	rating = query['buyer_rating']
 	price = query['price']
-	search(price, rating, file_type, keywords)
+	in_stock = query['in_stock']
+	search(in_stock, price, rating, file_type, keywords)
 
 
-def search(price, rating, file_type, keywords):
+def search(in_stock, price, rating, file_type, keywords):
 	global searchdb
 	# search from text/characteristics
 	keyword_query = searchdb.search_images.find({ "$text": {"$search": keywords} }, 
-												{ 'score': { "$meta": "textScore" } }).sort([('score', {'$meta': 'textScore'})]).limit(10)
+												{ 'score': { "$meta": "textScore" } }).sort([('score', {'$meta': 'textScore'})])
 
 	# search from (more) characteristics
 	file_type_query = searchdb.search_images.find({ "file_type": { "$in": file_type}},
@@ -78,6 +77,14 @@ def search(price, rating, file_type, keywords):
 		for p in price_query:
 			price_img_ids.append(p['img_id'])
 
+	# in stock query
+	stock_img_ids = []
+	if in_stock == "y":
+		stock_query = searchdb.search_images.find({ "in_stock": 1},
+												  { 'img_id': True, '_id': False })
+		for s in stock_query:
+			stock_img_ids.append(s['img_id'])
+
 	# img_ids are the foreign key into imagesdb, which contains the actual images to display
 	# this is the only info we need as a result of the search
 	file_type_img_ids = []
@@ -94,10 +101,11 @@ def search(price, rating, file_type, keywords):
 	# narrow down
 	results = []
 	for i in rating_img_ids:
-		if len(file_type_img_ids)==0 or i in file_type_img_ids:
-			if len(price_img_ids)==0 or i in price_img_ids:
-				if len(keyword_img_ids)== 0 or i in keyword_img_ids:
-					results.append(i)
+		if len(file_type_img_ids)== 0 or i in file_type_img_ids:
+			if len(price_img_ids)== 0 or i in price_img_ids:
+				if len(stock_img_ids)== 0 or i in stock_img_ids:
+					if len(keyword_img_ids)== 0 or i in keyword_img_ids:
+						results.append(i)
 
 	print("You have " + str(len(results)) + " results.")
 	for img_id in results:
@@ -134,17 +142,15 @@ def take_input():
 	keywords = input("Please input your search terms: ")
 	# if none is provided all images will be shown
 
-	search(price, rating, file_type, keywords)
+	in_stock = input("Must the item you're looking for be in stock? (y/n) ")
+
+	search(in_stock, price, rating, file_type, keywords)
 	return
 
 
 def main():
 	global searchdb
 	load_searchdb()
-	contents = searchdb.search_images.find()
-	for i in contents:
-		pprint(i)
-
 	take_input()
 
 
