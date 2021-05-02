@@ -1,8 +1,8 @@
 # ImageRepository
 
 SEARCH FUNCTION - my assumptions/definitions/scope
-* from characteristics of images - 2 classes of categories: required and fixed, optional and freeform. 
-* from text - description of images
+* from characteristics of images - type of images, 2 classes of possible tags: required and fixed, optional and freeform. 
+* from text - description/name of images
 * from an image - search for similar images by finding the search image, fetching the above and searching based on those attributes
 
 TOOLS
