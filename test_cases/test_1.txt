@@ -1,0 +1,6 @@
+
+tiff jpeg svg bmp
+4
+4
+cute animal white
+y
