@@ -34,11 +34,7 @@
 
 ### TEST CASES
 * The expected results are the img_ids that can be used to key into the images database where the actual image files to be rendered are stored.
+* Searching by any invalid values individually or together does not crash the program.
 1. *All blank:* Keep hitting enter until you're taken back to the first prompt. You should see all the image ids in the database.  
 2. *Search by img_id:* If you're using the original searchdb_contents.csv type `2840` ("Finding Dory") and you will also find 22891 ("Finding Nemo")
-3. *Search by file type only:* Hit enter to skip past the search by image option. If you're using the original searchdb_contents.csv type `svg`. Hit enter until you're taken back to the first prompt. You should get 25024, 43682, and 9745.
-4. *Search by price only:* Hit enter 2 times to skip past the search by image option and the file type option. If you're using the original searchdb_contents.csv type `2.50`. Hit enter until you're taken back to the first prompt. You should get 72266	("Wind-Swept Horse"), 22891 ("Finding Nemo") and 2840 ("Finding Dory").
-5. *Search by rating only:* Hit enter 3 times to skip to the rating selection. If you're using the original searchdb_contents.csv type `5`. Hit enter until you're taken back to the first prompt. You should get 72266, 25024, 75345, 56533, 47947, 49747, and 35498.
-6. *Search by text only:* Hit enter 4 times to skip to the text search. If you're using the original searchdb_contents.csv type `wild`. Hit enter to get 72266 ("Wind-swept Horse").
-7. *Search by what's in stock only:* Hit enter 5 times to skip to the stock selection. If you're using the original searchdb_contents.csv type `y`. Hit enter to get 40895, 2840, 72453, 38846, 25024, 72722, 5490, 67360, 566, 43682, 9745, 47947, and 13407.
-8. *Search by multiple categories:* Select a `test_X.txt` from the `test_cases/` folder where X is a number between 1 and 9. In response to the first prompt, Copy and paste the contents into the terminal window. The expected result will be contained within `test_X_result.txt` in the `test_cases/` folder.
+8. *More search options:* Select a `test_X.txt` from the `test_cases/` folder where X is a number between 1 and 9. In response to the first prompt, Copy and paste the contents into the terminal window. The expected result will be contained within `test_X_result.txt` in the `test_cases/` folder.
