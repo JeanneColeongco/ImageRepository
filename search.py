@@ -11,7 +11,7 @@ myclient = pymongo.MongoClient("mongodb://localhost:27017/")
 searchdb = myclient["searchdb"]
 
 # in practice, searchdb would likely populate gradually along with the main imagesdb, each time a seller uploads a new image
-# this function is for my own use for the sake of this implementation
+# this function is for the sake of this implementation
 def load_searchdb():
 	global searchdb
 
