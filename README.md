@@ -28,8 +28,9 @@
 2. Open 2 terminal windows.
 3. In the first terminal window, type `mkdir mongoDBlog` followed by `mongod --port 27017 --dbpath mongoDBlog &`
 4. In the second terminal window, type `python3 search.py`
-5. Type your answers to the prompts to find the images you desire
-6. Repeat the previous step as many times as you like!
+5. If you haven't made any changes to searchdb_contents.csv but want to repeat step 4, you can comment out `load_searchdb()` in the `main()` function
+6. Type your answers to the prompts to find the images you desire
+7. Repeat the previous step as many times as you like!
 
 ### TEST CASES
 * The expected results are the img_ids that can be used to key into the images database where the actual image files to be rendered are stored.
@@ -39,4 +40,4 @@
 4. *Search by price only:* Hit enter 2 times to skip past the search by image option and the file type option. If you're using the original searchdb_contents.csv type `2.50`. Hit enter until you're taken back to the first prompt. You should get 72266	("Wind-Swept Horse"), 22891 ("Finding Nemo") and 2840 ("Finding Dory").
 5. *Search by rating only:* Hit enter 3 times to skip to the rating selection. If you're using the original searchdb_contents.csv type `4`. Hit enter until you're taken back to the first prompt. You should get 72266 ("Wind-swept Horse") and 40895 ("Cute Puppy").
 6. *Search by text only:* Hit enter 4 times skip to the text search. If you're using the original searchdb_contents.csv type `wild`. Hit enter to get 72266 ("Wind-swept Horse").
-7. *Search by multiple categories:* Select a `test_X.txt` from the `test_cases/` folder where X is a number between 1 and 9. In response to the first prompt, Copy and paste the contents into the terminal window. The expected result will be contained within `test_result_X.txt` in the `test_cases/` folder.
+7. *Search by multiple categories:* Select a `test_X.txt` from the `test_cases/` folder where X is a number between 1 and 9. In response to the first prompt, Copy and paste the contents into the terminal window. The expected result will be contained within `test_X_result.txt` in the `test_cases/` folder.
