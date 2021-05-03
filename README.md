@@ -1,7 +1,7 @@
 # ImageRepository
 
 ### SEARCH FUNCTION
-##### My assumptions/definitions/scope
+#### My assumptions/definitions/scope
 * I'm interpreting this task as a search function for a marketplace app for artists and photographers, but it can easily be adapted for other types of online stores that people might want to search through for images.
 * A user can search from characteristics of images. The characteristics I've included are: file type (string e.g. 'png'), the average rating by people who've bought it (integer), price (float), and whether an item is in stock (boolean).
   * A user can search for multiple file types (space separated). In the frontend, a user might select from a number of checkboxes and the flags could be fed into this program.
@@ -18,10 +18,10 @@
 * Embedded NoSQL (mongoDB v4.4.3) - flexible for future as it doesn't require a schema (easily scalable for more or less or different attributes), cheaper to set up
 
 ### FILES
-* search.py - the program
-* README.md - YOU ARE HERE :)
-* searchdb_contents.csv — a sample of data
-* test_cases/ - for multiple inputs
+* *search.py* - the program
+* *README.md* - YOU ARE HERE :)
+* *searchdb_contents.csv* — a sample of data
+* *test_cases/* - for multiple categories (see Test Cases section #7)
 
 ### HOW TO USE
 1. Clone the repo: `git clone https://github.com/JeanneColeongco/ImageRepositorySearch.git`
