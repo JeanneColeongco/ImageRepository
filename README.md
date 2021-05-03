@@ -1,7 +1,7 @@
 # ImageRepository
 
-## SEARCH FUNCTION
-### My assumptions/definitions/scope
+### SEARCH FUNCTION
+#### My assumptions/definitions/scope
 * I'm interpreting this task as a search function for a marketplace app for artists and photographers, but it can easily be adapted for other types of online stores that people might want to search through for images.
 * A user can search from characteristics of images. The characteristics I've included are: file type (string e.g. 'png'), the average rating by people who've bought it (integer), price (float), and whether an item is in stock (boolean).
   * A user can search for multiple file types (space separated). In the frontend, a user might select from a number of checkboxes and the flags could be fed into this program.
@@ -13,32 +13,28 @@
   * When a user selects an image to search by or if they know the img_id, they get results that match that image's file type, price (and lower), rating (and higher), and text information (scored by mongoDB). In the front end, the user might right click on an image and select a 'search' option or they might type the img_id into a search field.
   * The results are the img_ids that can be used to key into the images database where the actual image files to be rendered are stored.
 
-## MY TOOLS
+### MY TOOLS
 * Python3 v3.9.0
 * Embedded NoSQL (mongoDB v4.4.3) - flexible for future as it doesn't require a schema (easily scalable for more or less or different attributes), cheaper to set up
 
-## FILES
-* search.py - the program
-* README.md - YOU ARE HERE :)
-* searchdb_contents.csv — a small sample of data
-* mongoDBlog/ - the database
-* test_cases/ - for multiple inputs
+### FILES
+* *search.py* - the program
+* *README.md* - YOU ARE HERE :)
+* *searchdb_contents.csv* — a sample of data
+* *test_cases/* - for multiple categories (see Test Cases section #8)
 
-# HOW TO USE
+### HOW TO USE
 1. Clone the repo: `git clone https://github.com/JeanneColeongco/ImageRepositorySearch.git`
 2. Open 2 terminal windows.
-3. In the first terminal window, type `mongod --port 27017 --dbpath mongoDBlog &`
+3. In the first terminal window, type `mkdir mongoDBlog` followed by `mongod --port 27017 --dbpath mongoDBlog &`
 4. In the second terminal window, type `python3 search.py`
-5. The database and text search index is already loaded, but if you modify searchdb_contents.csv to achieve different search results, uncomment `load_searchdb()` in the main function and then repeat the previous step
+5. If you haven't made any changes to searchdb_contents.csv but want to repeat step 4, you can comment out `load_searchdb()` in the `main()` function
 6. Type your answers to the prompts to find the images you desire
 7. Repeat the previous step as many times as you like!
 
-# TEST CASES
+### TEST CASES
 * The expected results are the img_ids that can be used to key into the images database where the actual image files to be rendered are stored.
+* Searching by any invalid values individually or together does not crash the program.
 1. *All blank:* Keep hitting enter until you're taken back to the first prompt. You should see all the image ids in the database.  
 2. *Search by img_id:* If you're using the original searchdb_contents.csv type `2840` ("Finding Dory") and you will also find 22891 ("Finding Nemo")
-3. *Search by file type only:* Hit enter to skip past the search by image option. If you're using the original searchdb_contents.csv type `png` and `jpeg` Hit enter until you're taken back to the first prompt. You should get 72266 ("Wind-swept Horse") and 40895 ("Cute Puppy").
-4. *Search by price only:* Hit enter 2 times to skip past the search by image option and the file type option. If you're using the original searchdb_contents.csv type `2.50`. Hit enter until you're taken back to the first prompt. You should get 72266	("Wind-Swept Horse"), 22891 ("Finding Nemo") and 2840 ("Finding Dory").
-5. *Search by rating only:* Hit enter 3 times to skip to the rating selection. If you're using the original searchdb_contents.csv type `4`. Hit enter until you're taken back to the first prompt. You should get 72266 ("Wind-swept Horse") and 40895 ("Cute Puppy").
-6. *Search by text only:* Hit enter 4 times skip to the text search. If you're using the original searchdb_contents.csv type `wild`. Hit enter to get 72266 ("Wind-swept Horse").
-7. *Search by multiple categories:* Select a `test_X.txt` from the `test_cases/` folder where X is a number between 1 and 9. In response to the first prompt, Copy and paste the contents into the terminal window. The expected result will be contained within `test_result_X.txt` in the `test_cases/` folder.
+8. *More search options:* Select a `test_X.txt` from the `test_cases/` folder where X is a number between 1 and 9. In response to the first prompt, Copy and paste the contents into the terminal window. The expected result will be contained within `test_X_result.txt` in the `test_cases/` folder.
