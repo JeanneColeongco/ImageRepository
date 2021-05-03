@@ -38,7 +38,7 @@ def load_searchdb():
 								header[8]: int(row[8]) # in_stock
 								}
 			searchdb.search_images.insert_one(search_document)
-			print(search_document)
+			# print(search_document) # for checking
 
 	# index the text information (name, description, site_tags, seller_tags)
 	searchdb.search_images.create_index([("text_info", TEXT)])
@@ -50,7 +50,7 @@ def search_by_image(img_id):
 	query = searchdb.search_images.find_one({ 'img_id': int(img_id) })
 	if query:
 		keywords = query['text_info']
-		file_type = query['file_type'].split()
+		file_type = []
 		rating = query['buyer_rating']
 		price = query['price']
 		in_stock = query['in_stock']
@@ -114,7 +114,7 @@ def search(in_stock, price, rating, file_type, keywords):
 	
 	# narrow down
 	narrowed = []
-	print(rating_img_ids, file_type_img_ids, price_img_ids, stock_img_ids, keyword_img_ids) # for checking
+	# print(rating_img_ids, file_type_img_ids, price_img_ids, stock_img_ids, keyword_img_ids) # for checking
 	for i in all_results:
 		if len(keyword_img_ids) == 0 or i in keyword_img_ids:
 			if len(file_type_img_ids) == 0 or i in file_type_img_ids:
