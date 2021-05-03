@@ -25,7 +25,7 @@
 
 ### HOW TO USE
 1. Clone the repo: `git clone https://github.com/JeanneColeongco/ImageRepositorySearch.git`
-2. Open 2 terminal windows.
+2. Open 2 terminal windows and navigate to the repo folder in both.
 3. In the first terminal window, type `mkdir mongoDBlog` followed by `mongod --port 27017 --dbpath mongoDBlog &`
 4. In the second terminal window, type `python3 search.py`
 5. If you haven't made any changes to searchdb_contents.csv but want to repeat step 4, you can comment out `load_searchdb()` in the `main()` function
@@ -36,5 +36,5 @@
 * The expected results are the img_ids that can be used to key into the images database where the actual image files to be rendered are stored.
 * Searching by any invalid values individually or together does not crash the program.
 1. *All blank:* Keep hitting enter until you're taken back to the first prompt. You should see all the image ids in the database.  
-2. *Search by img_id:* If you're using the original searchdb_contents.csv type `2840` ("Finding Dory") and you will also find 22891 ("Finding Nemo")
+2. *Search by img_id:* If you're using the original searchdb_contents.csv type `49747` and you will also find 56533 as they are both described as art studies, share the same rating and availability, and are within about a dollar from each other in price.
 3. *More search options:* Select a `test_X.txt` from the `test_cases/` folder where X is a number between 1 and 15. In response to the first prompt, Copy and paste the contents into the terminal window (you may have to hit enter afterwards). The expected result will be contained within `test_X_result.txt` in the `test_cases/` folder.
