@@ -10,7 +10,7 @@
 * A user can also search from text related to the image. Text attributes of images I've include are: name, description, tags that are required and fixed (e.g. tags that correspond to menu options on the site to help people browse) and tags that are optional and freeform (e.g. tags that the sellers have added to their image to help potential buyers find them). 
   * A user can search like they would on any search engine (alphanumeric characters and symbols, space-separated words) 
 * A user can search from an image they find on the site to find similar image. Each image in my search database has a unique img_id that is a foreign key to the actual images database that would then hold the actual image file. The search database itself only needs to contain attributes that may be relevant to the search, not the actual image file.
-  * When a user searches by image (via img_id), they get results that match that image's file type, price (and lower), rating (and higher), in stock boolean, and text information (scored by mongoDB). In the front end, the user might right click on an image and select a 'search' option or they might type the img_id into a search field.
+  * When a user searches by image (via img_id), they get results that match that image's price (and lower), rating (and higher), in stock boolean, and text information (scored by mongoDB). In the front end, the user might right click on an image and select a 'search' option or they might type the img_id into a search field.
 * The results of any type of search are the img_ids that can be used to key into the images database where the actual image files to be rendered are stored.
 
 ### MY TOOLS
