@@ -4,10 +4,9 @@ import csv
 
 myclient = pymongo.MongoClient("mongodb://localhost:27017/") 
 # mongod --port 27017 --dbpath mongoDBlog &
+# can change port number if you want, just be sure to do it both in here and the terminal!
 
-# focusing on the search function
-# so not storing images but rather a db of attributes that may be relevant to search 
-# has a foreign key to the actual imagesdb
+# has a foreign key to the actual imagesdb that contains image files
 searchdb = myclient["searchdb"]
 
 # in practice, searchdb would likely populate gradually along with the main imagesdb, each time a seller uploads a new image
@@ -45,6 +44,7 @@ def load_searchdb():
 	searchdb.search_images.create_index([("text_info", TEXT)])
 
 
+# retrieve db attributes based on img_id and search
 def search_by_image(img_id):
 	global searchdb
 	query = searchdb.search_images.find_one({ 'img_id': int(img_id) })
@@ -59,6 +59,7 @@ def search_by_image(img_id):
 		print("\nImage does not exist.")
 
 
+# given user input, search
 def search(in_stock, price, rating, file_type, keywords):
 	global searchdb
 	all_results = set()
@@ -75,7 +76,8 @@ def search(in_stock, price, rating, file_type, keywords):
 	rating_query = searchdb.search_images.find({ "buyer_rating": { "$gte": int(rating)}},
 												  { 'img_id': True, '_id': False })
 
-	# price query
+	# price query handled this way because number input is not guaranteed
+	# if no number, don't need to query for it and images of all prices are considered
 	price_img_ids = []
 	if price != "":
 		price_query = searchdb.search_images.find({ "price": { "$lte": float(price)}},
@@ -84,7 +86,8 @@ def search(in_stock, price, rating, file_type, keywords):
 			price_img_ids.append(p['img_id'])
 			all_results.add(p['img_id'])
 
-	# in stock query
+	# in stock query because text input must convert to number
+	# and "n" case, don't need to query for it and all images considered
 	stock_img_ids = []
 	if in_stock == "y":
 		stock_query = searchdb.search_images.find({ "in_stock": 1},
@@ -93,12 +96,12 @@ def search(in_stock, price, rating, file_type, keywords):
 			stock_img_ids.append(s['img_id'])
 			all_results.add(s['img_id'])
 
-	# img_ids are the foreign key into imagesdb, which contains the actual images to display
-	# this is the only info we need as a result of the search
+	# we only need img_ids to retrieve image files from imagesdb
 	file_type_img_ids = []
 	keyword_img_ids = []
 	rating_img_ids = []
 	
+	# for narrow down
 	for r in rating_query:
 		rating_img_ids.append(r['img_id'])
 		all_results.add(r['img_id'])
@@ -120,20 +123,22 @@ def search(in_stock, price, rating, file_type, keywords):
 						if len(rating_img_ids) == 0 or i in rating_img_ids:
 							narrowed.append(i)
 
+	# results output
 	print("\nYou have " + str(len(narrowed)) + " result(s).")
 	for img_id in narrowed:
 		print(img_id)
 
-	take_input()
+	take_input() # loop
 
 
+# user input
 def take_input():
+	# search by img_id, quit, or more search by characteristics/text instead
 	to_do = input("Provide img_id if you wish to search by image.\nType 'q' if you wish to quit\nOtherwise, hit Enter for more search options: ")
+	
 	if to_do == "q":
 		exit()
 	elif to_do == "":
-		# a separate field because for security there should be a limit on the file types that can be uploaded
-		# so a checkbox interface is likely a reasonable expectation and the flags for those checkboxes can be fed into here
 		file_type = input("Prefered image file type(s), space-separated: ").split()
 		# if none is provided, all types will be shown
 
@@ -161,7 +166,6 @@ def take_input():
 		in_stock = input("Must the item you're looking for be in stock? (y/n) ")
 
 		search(in_stock, price, rating, file_type, keywords)
-		return
 	
 	# assume users can only search by an image that's in the database to find similar images
 	# when searching by an image, all that is needed is the image id, the rest can be retrieved from there
@@ -174,8 +178,8 @@ def take_input():
 
 def main():
 	global searchdb
-	load_searchdb()
-	take_input()
+	load_searchdb() # can comment out if you already ran it at least once and haven't changed input csv since
+	take_input() # it begins!
 
 
 if __name__ == "__main__":
