@@ -37,4 +37,4 @@
 * Searching by any invalid values individually or together does not crash the program.
 1. *All blank:* Keep hitting enter until you're taken back to the first prompt. You should see all the image ids in the database.  
 2. *Search by img_id:* If you're using the original searchdb_contents.csv type `2840` ("Finding Dory") and you will also find 22891 ("Finding Nemo")
-8. *More search options:* Select a `test_X.txt` from the `test_cases/` folder where X is a number between 1 and 9. In response to the first prompt, Copy and paste the contents into the terminal window. The expected result will be contained within `test_X_result.txt` in the `test_cases/` folder.
+8. *More search options:* Select a `test_X.txt` from the `test_cases/` folder where X is a number between 1 and 9. In response to the first prompt, Copy and paste the contents into the terminal window (you may have to hit enter). The expected result will be contained within `test_X_result.txt` in the `test_cases/` folder.
