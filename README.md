@@ -1,4 +1,4 @@
-# ImageRepository
+# ImageRepositorySearch
 
 ### SEARCH FUNCTION
 #### My assumptions/definitions/scope
